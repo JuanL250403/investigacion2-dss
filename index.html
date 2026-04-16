@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/estilos.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <title>Document</title>
+</head>
+<header>
+    <h1>Museo Digital</h1>
+    <p id="nombre">
+
+    </p>
+    <p>Deseas salir | <button href="logout.php" id="cerrarSesion"
+            style="color:white; background-color: transparent; border: none; cursor: pointer;">Salir</a></p>
+</header>
+
+<body>
+    <div class="galeria-grid" id="imagenes">
+
+    </div>
+</body>
+<script>
+    $(document).ready(() => {
+        $.getJSON("php/controladores/autenticacion.php", (data) => {
+            if (!data.valido) {
+                window.location.href = "login.html"
+            } else {
+                $("#nombre").text(`Bienvenido/a ${data.datos.nombre}`)
+            }
+        })
+
+        const renderizarImagenes = (imagenes) => {
+
+            $.each(imagenes, (index, data) => {
+
+                var contenedorImagen = $("<div>").append(
+                    `<img src="${data.img}"">`
+                ).addClass("img-container")
+
+                var nombre = $("<h3>").text(data.nombre)
+
+                var descripcion = $("<p>").text(data.descripcion).addClass('descripcion')
+
+                var verObra = $("<form>").append(
+                    '<button type="submit">enviar</button>'
+                ).submit((e) => {
+                    e.preventDefault()
+                    window.location.href = `detalle.html?id=${data.id}`
+
+                })
+
+                var contenedor = $("<div>").append(contenedorImagen, nombre, descripcion, verObra).addClass('pintura-card')
+
+                $("#imagenes").append(contenedor)
+            })
+
+        }
+
+        $.getJSON("php/controladores/obtenerImagenes.php",
+            (datos) => {
+
+                $.each(datos, (index, data) => {
+
+                    var contenedorImagen = $("<div>").append(
+                        `<img src="${data.img}"">`
+                    ).addClass("img-container")
+
+                    var nombre = $("<h3>").text(data.nombre)
+
+                    var descripcion = $("<p>").text(data.descripcion).addClass('descripcion')
+
+                    var verObra = $("<form>").append(
+                        '<button type="submit">enviar</button>'
+                    ).submit((e) => {
+                        e.preventDefault()
+                        window.location.href = `detalle.html?id=${data.id}`
+
+                    })
+
+                    var contenedor = $("<div>").append(contenedorImagen, nombre, descripcion, verObra).addClass('pintura-card')
+
+                    $("#imagenes").append(contenedor)
+                })
+            }
+        )
+
+        $("#cerrarSesion").click(() => {
+            $.post("php/controladores/cerrarSesion.php",null, () => {
+                window.location.href = "login.html"
+            })
+        })
+
+    })
+</script>
+
+</html>

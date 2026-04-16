@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/estilos.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <header>
+        <h1 id="titulo">
+
+        </h1>
+        <a href="index.html" class="btn-gold" style="color:white; margin-top:10px;">← Regresar</a>
+    </header>
+
+    <div class="detalle-container">
+        <div class="foto-grande" id="fotoContainer">
+            <p style="margin-top:20px; font-style:italic;">
+            </p>
+        </div>
+
+        <div class="info-seccion">
+            <h3>Danos tu opinion</h3>
+
+            <textarea id="comentario" required placeholder="Escriba aquí su comentario..."
+                style="width:100%; height:100px; padding:10px;"></textarea>
+            <button type="button" class="btn-gold" id="enviarComentario" style="width:100%; margin-top:10px;">Agregar
+                Comentario</button>
+
+            <div style="margin-top:30px;" id="comentarios">
+
+            </div>
+        </div>
+
+    </div>
+</body>
+<script>
+    $(document).ready(() => {
+        let sesion;
+        const params = new URLSearchParams(window.location.search);
+        const imagenId = params.get('id')
+
+        $.getJSON("php/controladores/autenticacion.php", (data) => {
+            if (!data.valido) {
+                window.location.href = "login.html"
+            } else {
+                sesion = data
+            }
+        })
+
+
+        const renderizarComentarios = (comentarios) => {
+            console.log('renderizando')
+
+            let listaComentarios = [];
+            $.each(comentarios, (index, comentario) => {
+                console.log(sesion)
+                var nombre = $("<strong>").text(comentario.nombre).addClass()
+                var descripcion = $("<p>").text(comentario.comentario).addClass()
+
+                var comentarioContainer
+
+                if (comentario.usuarioId === sesion.datos.id) {
+                    var eliminar = $("<button>").text("Elimiar")
+                        .css({ color: 'red', background: 'none', border: 'none', cursor: 'pointer', 'font-size': '0.8rem' })
+                        .click(() => {
+                            const datosEnvio = {
+                                id: comentario.id
+                            }
+                            $.post("php/controladores/eliminarComentario.php", datosEnvio, (res) => {
+                                console.log(comentario)
+                                obtenerImagen()
+                            })  
+                        })
+
+                    comentarioContainer = $("<div>").append(nombre, descripcion, eliminar).addClass("comentario-item")
+                } else {
+                    comentarioContainer = $("<div>").append(nombre, descripcion).addClass("comentario-item")
+                }
+                listaComentarios.push(comentarioContainer)
+            })
+            $("#comentarios").html(listaComentarios)
+        }
+
+
+        const obtenerImagen = () => {
+            $.getJSON("php/controladores/obtenerImagen.php", { id: imagenId }, (data) => {
+                console.log(data)
+                $('#fotoContainer').html(
+                    `<img src="${data.img}">`
+                )
+                $("#titulo").text(data.nombre)
+
+                renderizarComentarios(data.comentarios)
+            });
+
+        }
+
+        obtenerImagen()
+
+
+        $("#enviarComentario").click(() => {
+            const comentario = $("#comentario").val()
+            const usuarioId = sesion.datos.id
+            
+            const datosComent = {
+                comentario: comentario,
+                usuarioId: usuarioId,
+                imagenId: imagenId
+            }
+
+            $.post("php/controladores/registrarComentario.php", datosComent, (data) => {
+                console.log(data)
+                obtenerImagen()
+            })
+        })
+    })
+</script>
+
+</html>

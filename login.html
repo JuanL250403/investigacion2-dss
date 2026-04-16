@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/estilos.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <title>Document</title>
+</head>
+
+<body class="auth-body">
+    <div class="auth-card">
+        <h2>INICIO DE SESIÓN</h2>
+
+        <p style="color:red; text-align:center;" id="respuesta">
+            
+        </p>
+
+        <form id="login">
+            <input type="email" id="correo" placeholder="Correo" required>
+            <input type="password" id="password" placeholder="Contraseña" required>
+            <button type="submit" class="btn-gold">Entrar</button>
+        </form>
+        <p><a href="registro.html" style="color:var(--oro);">Registrar cuenta</a></p>
+    </div>
+</body>
+
+<script>
+    $(document).ready(() => {
+        $("#login").submit((e) => {
+            e.preventDefault()
+            const correo = $("#correo").val()
+            const password = $("#password").val()
+
+            const datosUsuario = {
+                correo: correo,
+                password: password
+            } 
+
+            $.post("php/controladores/inicioSesion.php", datosUsuario, (data) => {
+                const respuesta = JSON.parse(data) 
+                console.log(respuesta)
+                if(respuesta.error){
+                    $("#respuesta").text(respuesta.error)
+                } else {
+
+                    window.location.href = "index.html"
+                }
+            })
+        })  
+    })
+</script>
+
+</html>

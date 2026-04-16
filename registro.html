@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/estilos.css">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+</head>
+
+<body class="auth-body">
+
+    <div class="auth-card">
+        <h2>REGISTRO</h2>
+
+
+        <p style="color:red; text-align:center;" id="respuesta">
+
+        </p>
+
+        <form id="registrarUsuario">
+            <input type="text" id="nombre" placeholder="Nombre completo" value="" required>
+
+            <input type="email" id="correo" placeholder="Correo" value="" required>
+
+            <input type="password" id="password" placeholder="Contraseña" required>
+
+            <button type="submit" class="btn-gold" id="registrar">Registrar</button>
+
+        </form>
+
+        <p>
+            <a href="login.html" style="color:var(--oro);">
+                Volver al login
+            </a>
+        </p>
+    </div>
+
+</body>
+
+<script>
+    $(document).ready(() => {
+        $("#registrarUsuario").submit((e) => {
+            e.preventDefault()
+
+            const nombre = $("#nombre").val()
+            const correo = $("#correo").val()
+            const password = $("#password").val()
+
+            if(parseInt(nombre)){
+                $("#respuesta").text("El nombre completo no puede ser un numero")
+                return;
+            }
+
+            const datosUsuario = {
+                nombre: nombre,
+                correo: correo,
+                password: password
+            }
+
+            $.post("php/controladores/registro.php", datosUsuario, (data) => {
+
+
+                const respuesta = JSON.parse(data)
+                if(respuesta.error){
+                    $("#respuesta").text(respuesta.error)
+                } else {
+                    $("#respuesta").text(respuesta.mensaje).css({"color" : "green"})
+                }
+            })
+        })
+    })
+</script>
+
+</html>

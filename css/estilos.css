@@ -1,0 +1,346 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Raleway:wght@300;400;600&display=swap');
+
+:root {
+    --oro: #af955a;
+    --negro-suave: #1a1a1a;
+    --blanco-hueso: #fdfdfd;
+    --gris-borde: #e0e0e0;
+}
+
+body {
+    background-color: var(--blanco-hueso);
+    color: var(--negro-suave);
+    font-family: 'Raleway', sans-serif;
+    margin: 0;
+}
+
+header {
+    background-color: var(--negro-suave);
+    color: var(--oro);
+    padding: 30px;
+    text-align: center;
+    border-bottom: 5px solid var(--oro);
+}
+
+.descripcion {
+    font-size: 0.9rem;
+    color: #777;
+}
+
+header h1 {
+    font-family: 'Playfair Display', serif;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin: 0;
+}
+
+/* GRID DE 3 COLUMNAS */
+.galeria-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    padding: 50px 8%;
+}
+
+.pintura-card {
+    height: 500px;
+    background: rgb(255, 255, 255);
+    padding: 15px;
+    border: 1px solid var(--gris-borde);
+    text-align: center;
+    transition: 0.4s;
+}
+
+.pintura-card:hover {
+
+    border-color: var(--oro);
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.img-container {
+    height: 300px;
+    overflow: hidden;
+    background: #000;
+    margin-bottom: 15px;
+}
+
+.img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.9;
+    transition: 0.5s;
+}
+
+.pintura-card:hover img {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* BOTONES */
+.btn-gold {
+    background: var(--negro-suave);
+    color: var(--oro);
+    border: 1px solid var(--oro);
+    padding: 10px 20px;
+    text-decoration: none;
+    display: inline-block;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.btn-gold:hover {
+    background: var(--oro);
+    color: white;
+}
+
+/* DETALLE */
+.detalle-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    padding: 60px 8%;
+}
+
+.foto-grande img {
+    width: 100%;
+    border: 15px solid white;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.comentario-item {
+    background: #f9f9f9;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-left: 4px solid var(--oro);
+}
+
+/* --- ESTILOS PARA LOGIN Y REGISTRO --- */
+
+/* Fondo para la página de autenticación */
+.auth-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(rgba(26, 26, 26, 0.8), rgba(26, 26, 26, 0.8)),
+        url('https://images.unsplash.com/photo-1554907984-15263bfd63bd?q=80&w=2070&auto=format&fit=crop');
+    /* Imagen de fondo temática */
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+}
+
+/* Tarjeta de Inicio de Sesión */
+.auth-card {
+    background-color: var(--blanco-hueso);
+    padding: 50px 40px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    border: 5px solid var(--oro);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    position: relative;
+}
+
+/* Título con la fuente del Museo */
+.auth-card h2 {
+    font-family: 'Playfair Display', serif;
+    color: var(--negro-suave);
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+    letter-spacing: 2px;
+    border-bottom: 2px solid var(--oro);
+    display: inline-block;
+    padding-bottom: 10px;
+}
+
+/* Estilo de los inputs */
+.auth-card form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.auth-card input {
+    padding: 12px 15px;
+    border: 1px solid var(--gris-borde);
+    font-family: 'Raleway', sans-serif;
+    outline: none;
+    transition: 0.3s;
+    background-color: #fff;
+}
+
+.auth-card input:focus {
+    border-color: var(--oro);
+    box-shadow: 0 0 5px rgba(175, 149, 90, 0.3);
+}
+
+.auth-card .btn-gold {
+    width: 100%;
+    padding: 15px;
+    margin-top: 10px;
+    letter-spacing: 2px;
+}
+
+/* Enlace de registro */
+.auth-card p {
+    margin-top: 25px;
+    font-size: 0.9rem;
+}
+
+.auth-card p a {
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.auth-card p a:hover {
+    text-decoration: underline;
+    opacity: 0.8;
+}
+
+/* Adorno visual tipo 'marco' */
+.auth-card::before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border: 1px solid rgba(175, 149, 90, 0.2);
+    pointer-events: none;
+}
+
+/* --- ESTILOS PARA LA PÁGINA DE REGISTRO --- */
+
+body:has(.container) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(rgba(26, 26, 26, 0.85), rgba(26, 26, 26, 0.85)),
+        url('https://images.unsplash.com/photo-1554907984-15263bfd63bd?q=80&w=2070&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+}
+
+/* Estilo de la tarjeta de registro */
+.container {
+    background-color: var(--blanco-hueso);
+    padding: 50px 40px;
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+    border: 5px solid var(--oro);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    position: relative;
+}
+
+/* Título estilo Museo */
+.container h2 {
+    font-family: 'Playfair Display', serif;
+    color: var(--negro-suave);
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+    letter-spacing: 2px;
+    border-bottom: 2px solid var(--oro);
+    display: inline-block;
+    padding-bottom: 10px;
+    text-transform: uppercase;
+}
+
+/* Formulario y espaciado */
+.container form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Estilo de los inputs de registro */
+.container input {
+    padding: 12px 15px;
+    border: 1px solid var(--gris-borde);
+    font-family: 'Raleway', sans-serif;
+    outline: none;
+    transition: 0.3s;
+    background-color: #fff;
+}
+
+.container input:focus {
+    border-color: var(--oro);
+    box-shadow: 0 0 5px rgba(175, 149, 90, 0.3);
+}
+
+/* Botón de registro  */
+.container button {
+    background: var(--negro-suave);
+    color: var(--oro);
+    border: 1px solid var(--oro);
+    padding: 15px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 0.85rem;
+    cursor: pointer;
+    letter-spacing: 2px;
+    transition: 0.4s;
+    margin-top: 10px;
+}
+
+.container button:hover {
+    background: var(--oro);
+    color: white;
+}
+
+/* Enlace para volver al login */
+.container p {
+    margin-top: 25px;
+    font-size: 0.9rem;
+    color: var(--negro-suave);
+}
+
+.container p a {
+    color: var(--oro);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.container p a:hover {
+    text-decoration: underline;
+}
+
+/* Adorno visual interno */
+.container::before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border: 1px solid rgba(175, 149, 90, 0.2);
+    pointer-events: none;
+}
+
+.error-box {
+    background-color: #ffe6e6;
+    border: 1px solid #ff4d4d;
+    color: #cc0000;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    width: fit-content;
+}
+
+.success {
+    background-color: #e6ffe6;
+    border: 1px solid #33cc33;
+    color: #006600;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    width: fit-content;
+}
