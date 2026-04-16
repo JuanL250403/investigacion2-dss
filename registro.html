@@ -50,7 +50,7 @@
             const correo = $("#correo").val()
             const password = $("#password").val()
 
-            if(parseInt(nombre)){
+            if (parseInt(nombre)) {
                 $("#respuesta").text("El nombre completo no puede ser un numero")
                 return;
             }
@@ -62,14 +62,15 @@
             }
 
             $.post("php/controladores/registro.php", datosUsuario, (data) => {
-
-
                 const respuesta = JSON.parse(data)
-                if(respuesta.error){
+                if (respuesta.error) {
                     $("#respuesta").text(respuesta.error)
                 } else {
-                    $("#respuesta").text(respuesta.mensaje).css({"color" : "green"})
+                    $("#respuesta").text(respuesta.mensaje).css({ "color": "green" })
                 }
+            })
+            .fail(() => {
+                $("#respuesta").text("Error al momento de registrar usuario")
             })
         })
     })

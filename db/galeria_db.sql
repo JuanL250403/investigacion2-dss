@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-04-2026 a las 03:45:33
+-- Tiempo de generación: 16-04-2026 a las 03:59:48
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `galeria_db`
 --
+CREATE DATABASE IF NOT EXISTS `galeria_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `galeria_db`;
 
 -- --------------------------------------------------------
 
@@ -59,7 +61,8 @@ INSERT INTO `comentarios` (`id`, `usuario_id`, `imagen_id`, `comentario`) VALUES
 (26, 2, 23, 'Un poco inquietante pero buena'),
 (27, 1, 3, 'muy impresionante'),
 (28, 3, 3, 'me gusta mucho'),
-(35, 3, 1, 'ffff');
+(35, 3, 1, 'ffff'),
+(37, 8, 2, 'que mona');
 
 -- --------------------------------------------------------
 
@@ -158,7 +161,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `comentarios`
 --
 ALTER TABLE `comentarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT de la tabla `imagenes`

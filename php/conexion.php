@@ -9,11 +9,16 @@ class Conexion
 
     public function __construct()
     {
-        $this->conexion = new PDO($this->dsn, $this->usuario, $this->contrasenia);
-        $this->conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        try {
+            $this->conexion = new PDO($this->dsn, $this->usuario, $this->contrasenia);
+            $this->conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (Exception $e) {
+            header("Location: Error.html");
+        }
     }
 
-    public function obtenerConexion() {
+    public function obtenerConexion()
+    {
         return $this->conexion;
     }
 }

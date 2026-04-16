@@ -11,8 +11,14 @@ $stmtComentarios = $conexion->prepare("SELECT c.id, c.comentario, c.usuario_id a
 $stmtImagen->execute([$id]);
 $stmtComentarios->execute([$id]);
 
-$imagen = $stmtImagen->fetch();
+if (!$imagen = $stmtImagen->fetch()) {
+    echo json_encode(array(
+        "error" => "No existe imagen"
+    ));
+    return;
+}
 $comentarios = [];
+
 while ($comentario = $stmtComentarios->fetch()) {
     $comentarios[] = $comentario;
 }

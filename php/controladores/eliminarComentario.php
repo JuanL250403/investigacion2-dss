@@ -7,6 +7,9 @@ $conexion = $pdo->obtenerConexion();
 $id = intval($_POST["id"]);
 
 $stmnt = $conexion->prepare("DELETE FROM comentarios WHERE id = ?");
-$stmnt->bindValue(1, $id, PDO::PARAM_INT); 
-$stmnt->execute();
-var_dump($id);
+if(!$stmnt->execute([$id])){
+    echo json_encode(array(
+        "error" => "error al eliminar comentario"
+    ));
+}
+

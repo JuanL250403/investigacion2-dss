@@ -17,7 +17,9 @@
         <a href="index.html" class="btn-gold" style="color:white; margin-top:10px;">← Regresar</a>
     </header>
 
-    <div class="detalle-container">
+    <h1 id="noImagenes" style="display: none;"></h1>
+    <div class="detalle-container" id="container">
+
         <div class="foto-grande" id="fotoContainer">
             <p style="margin-top:20px; font-style:italic;">
             </p>
@@ -31,6 +33,7 @@
             <button type="button" class="btn-gold" id="enviarComentario" style="width:100%; margin-top:10px;">Agregar
                 Comentario</button>
 
+            <p id="errorComentario" style="display: none;">comentarios</p>
             <div style="margin-top:30px;" id="comentarios">
 
             </div>
@@ -71,10 +74,12 @@
                             const datosEnvio = {
                                 id: comentario.id
                             }
-                            $.post("php/controladores/eliminarComentario.php", datosEnvio, (res) => {
-                                console.log(comentario)
+                            $.post("php/controladores/eliminarComentario.php", datosEnvio, (data) => {
                                 obtenerImagen()
-                            })  
+                                if (data.error) {
+                                    $("#errorComentario").text(data.error).css({ display: 'block' })
+                                }
+                            })
                         })
 
                     comentarioContainer = $("<div>").append(nombre, descripcion, eliminar).addClass("comentario-item")
@@ -89,14 +94,23 @@
 
         const obtenerImagen = () => {
             $.getJSON("php/controladores/obtenerImagen.php", { id: imagenId }, (data) => {
-                console.log(data)
+
+                if (data.error || !data) {
+                    $("#container").css({ display: 'none' })
+                    $("#noImagenes").text(`No existe la imagen solicitada`).css({ display: 'block' })
+                }
+
                 $('#fotoContainer').html(
                     `<img src="${data.img}">`
                 )
                 $("#titulo").text(data.nombre)
 
                 renderizarComentarios(data.comentarios)
-            });
+            })
+                .fail(() => {
+                    $("#container").css({ display: 'none' })
+                    $("#noImagenes").text(`Error al momento de obtener imagen`).css({ display: 'block' })
+                });
 
         }
 
@@ -106,7 +120,11 @@
         $("#enviarComentario").click(() => {
             const comentario = $("#comentario").val()
             const usuarioId = sesion.datos.id
-            
+
+            if (!comentario) {
+                $("#errorComentario").text("Escriba algo en el comentario").css({ display: 'block' })
+                return
+            }
             const datosComent = {
                 comentario: comentario,
                 usuarioId: usuarioId,
@@ -114,7 +132,7 @@
             }
 
             $.post("php/controladores/registrarComentario.php", datosComent, (data) => {
-                console.log(data)
+                $("#errorComentario").css({ display: 'none' })
                 obtenerImagen()
             })
         })

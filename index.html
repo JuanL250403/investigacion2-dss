@@ -18,6 +18,7 @@
 </header>
 
 <body>
+    <h1 id="noImagenes" style="display: none;">No existen imagenes registradas</h1>
     <div class="galeria-grid" id="imagenes">
 
     </div>
@@ -61,7 +62,10 @@
 
         $.getJSON("php/controladores/obtenerImagenes.php",
             (datos) => {
-
+                if (!datos) {
+                    $("#imagenes").css({ display: 'none' })
+                    $("#noImagenes").css({ display: 'block' })
+                }
                 $.each(datos, (index, data) => {
 
                     var contenedorImagen = $("<div>").append(
@@ -86,9 +90,13 @@
                 })
             }
         )
+            .fail(() => {
+                $("#imagenes").css({ display: 'none' })
+                $("#noImagenes").text("Error al momento de obtener imagenes").css({ display: 'block' })
+            })
 
         $("#cerrarSesion").click(() => {
-            $.post("php/controladores/cerrarSesion.php",null, () => {
+            $.post("php/controladores/cerrarSesion.php", null, () => {
                 window.location.href = "login.html"
             })
         })

@@ -14,7 +14,7 @@
         <h2>INICIO DE SESIÓN</h2>
 
         <p style="color:red; text-align:center;" id="respuesta">
-            
+
         </p>
 
         <form id="login">
@@ -36,19 +36,22 @@
             const datosUsuario = {
                 correo: correo,
                 password: password
-            } 
+            }
 
             $.post("php/controladores/inicioSesion.php", datosUsuario, (data) => {
-                const respuesta = JSON.parse(data) 
+                const respuesta = JSON.parse(data)
                 console.log(respuesta)
-                if(respuesta.error){
+                if (respuesta.error) {
                     $("#respuesta").text(respuesta.error)
                 } else {
 
                     window.location.href = "index.html"
                 }
             })
-        })  
+                .fail(() => {
+                    $("#respuesta").text("Error al momento de inicia sesion")
+                })
+        })
     })
 </script>
 
